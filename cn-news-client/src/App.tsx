@@ -1,13 +1,13 @@
 import "./App.css";
 import Header from "./components/Header";
-import ArticleList from "./components/ArticleList";
+import NewsContainer from "./components/NewsContainer";
 
 const App = () => {
   return (
     <div className="App">
       <Header />
       <div className="app-content">
-        <ArticleList />
+        <NewsContainer />
       </div>
     </div>
   );
