@@ -1,24 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { DOMAIN, ENDPOINTS } from './constants';
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import { DOMAIN, ENDPOINTS } from "./constants";
+import Article from "./components/Article";
+import { Grid } from "@mui/material";
 
 const App = () => {
   const [headlines, setHeadlines] = useState<any>([]);
-  
+
   useEffect(() => {
     fetch(`${DOMAIN}${ENDPOINTS.headlines}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      setHeadlines(data?.data?.articles);
-    });
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setHeadlines(data?.data?.articles);
+      });
   }, []);
 
   useEffect(() => {
@@ -27,7 +29,6 @@ const App = () => {
 
   return (
     <div className="App">
-      
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
@@ -48,20 +49,20 @@ const App = () => {
         </AppBar>
       </Box>
       <div className="app-content">
-        {
-        headlines?.map((headline: any) => {
-          console.log(headline);
-          return (
-          <div key={headline.title}>
-            <h1>{headline.title}</h1>
-            <img src={headline.urlToImage} alt={headline.title} />
-          </div>
-        );
-      })
-      }
+        <div className="article-list">
+          <Grid container spacing={4}>
+            {headlines?.map((headline: any) => {
+              return (
+                <Grid item xs={2}>
+                  <Article {...headline} />
+                </Grid>
+              );
+            })}
+          </Grid>
         </div>
+      </div>
     </div>
   );
-};       
+};
 
 export default App;
