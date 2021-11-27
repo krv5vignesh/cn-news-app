@@ -1,4 +1,4 @@
-# Welcome to the Conde Nast News App
+# Welcome to the Condé Nast News App
 
 ## Project structure
 
