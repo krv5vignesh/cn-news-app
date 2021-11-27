@@ -15,7 +15,23 @@ const getHeadlines = async (req: Request, res: Response, next: NextFunction) => 
     } else {
       return res.status(500).json({message: error.message});
     }
-  });;
+  });
 };
 
-export default { getHeadlines };
+const getNewsByKeyword = async (req: Request, res: Response, next: NextFunction) => {
+  const url = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}`;
+  console.log(req.params);
+  await axios.get(url)
+  .then(response => {
+    return res.status(200).json({data: response.data});
+  })
+  .catch(function (error) {
+    if (error.response) {
+      return res.status(error.response.status).json({message: error.response.data});
+    } else {
+      return res.status(500).json({message: error.message});
+    }
+  });
+};
+
+export default { getHeadlines, getNewsByKeyword };

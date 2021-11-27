@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import "./article.css";
-import { Article as ArticleType } from "./types";
+import { ArticleType } from "./types";
 
 const Article = (props: ArticleType) => {
   const { title, url, urlToImage } = props;
@@ -16,8 +16,8 @@ const Article = (props: ArticleType) => {
       <CardActionArea className="action-area">
         <Link href={url} target="_blank">
           <CardMedia
+            className="article-image"
             component="img"
-            height="140"
             image={urlToImage ?? "/fallback-image.png"}
             alt="Article image"
           />

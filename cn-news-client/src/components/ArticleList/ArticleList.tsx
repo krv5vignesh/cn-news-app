@@ -1,20 +1,14 @@
-import { Article as ArticleType } from "../Article/types";
 import Article from "../Article";
 import { CircularProgress, Grid } from "@mui/material";
-import { DOMAIN, ENDPOINTS } from "../../constants";
-import { useEffect, useState } from "react";
 import "./articleList.css";
+import { ArticleType } from "../Article/types";
 
-const ArticleList = () => {
-  const [articles, setArticles] = useState<Array<ArticleType>>([]);
+type ArticleListProps = {
+  articles: Array<ArticleType>;
+};
 
-  useEffect(() => {
-    fetch(`${DOMAIN}${ENDPOINTS.headlines}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setArticles(data?.data?.articles);
-      });
-  }, []);
+const ArticleList = (props: ArticleListProps) => {
+  const { articles } = props;
 
   return (
     <div className="article-list">

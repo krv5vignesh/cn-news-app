@@ -1,11 +1,33 @@
+import { useEffect, useState } from "react";
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import { useState } from "react";
 import ArticleList from "../ArticleList";
 import SearchIcon from "@mui/icons-material/Search";
 import "./newsContainer.css";
+import { ArticleType } from "../Article/types";
+import { DOMAIN, ENDPOINTS } from "../../constants";
 
 const NewsContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [articles, setArticles] = useState<Array<ArticleType>>([]);
+
+  useEffect(() => {
+    // On initial load, fetch latest articles
+    fetch(`${DOMAIN}${ENDPOINTS.headlines}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setArticles(data?.data?.articles);
+      });
+  }, []);
+
+  const handleSearch = () => {
+    setArticles([]);
+    // On search term change, fetch articles from everything endpoint
+    fetch(`${DOMAIN}${ENDPOINTS.search}/${searchTerm}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setArticles(data?.data?.articles);
+      });
+  };
 
   return (
     <div className="news-container">
@@ -17,10 +39,13 @@ const NewsContainer = () => {
           label="Search"
           value={searchTerm}
           onChange={(event) => setSearchTerm(event.target.value)}
+          onKeyDown={(event) => {
+            event.key === "Enter" && handleSearch();
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton sx={{ p: "10px" }}>
+                <IconButton onClick={handleSearch}>
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
@@ -28,7 +53,7 @@ const NewsContainer = () => {
           }}
         />
       </div>
-      <ArticleList />
+      <ArticleList articles={articles} />
     </div>
   );
 };
