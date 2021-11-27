@@ -1,0 +1,15 @@
+{
+  "name": "cn-news-app",
+  "version": "1.0.0",
+  "description": "Welcome to the Conde Nast News App",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd cn-news-server && npm run dev\" \"cd cn-news-client && npm start\" ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.4.0"
+  }
+}
