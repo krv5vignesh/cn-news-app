@@ -1,0 +1,9 @@
+.article-list {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.spinner {
+  margin-top: 300px;
+}

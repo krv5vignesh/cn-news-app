@@ -1,31 +1,31 @@
-import { Card, CardActionArea, CardContent, CardMedia, Link, Typography } from "@mui/material"
-import './article.css';
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Link,
+  Typography,
+} from "@mui/material";
+import "./article.css";
+import { Article as ArticleType } from "./types";
 
-type AritcleProps = {
-  title: string;
-  description: string;
-  url: string;
-  urlToImage: string;
-}
-const Article = (props: AritcleProps) => {
+const Article = (props: ArticleType) => {
   const { title, url, urlToImage } = props;
   return (
     <Card className="article-card">
-      <CardActionArea>
-      <Link href={url} target="_blank">
-        <CardMedia
-          component="img"
-          height="140"
-          image={urlToImage ?? '/fallback-image.png'}
-          alt="Article image"
-        />
-        <CardContent>
-          <Typography className="article-title">
-            {title}
-          </Typography>
-        </CardContent>
+      <CardActionArea className="action-area">
+        <Link href={url} target="_blank">
+          <CardMedia
+            component="img"
+            height="140"
+            image={urlToImage ?? "/fallback-image.png"}
+            alt="Article image"
+          />
+          <CardContent>
+            <Typography className="article-title">{title}</Typography>
+          </CardContent>
         </Link>
-        </CardActionArea>
+      </CardActionArea>
     </Card>
   );
 };
