@@ -3,37 +3,6 @@ import routes from './routes/news';
 
 const app: Express = express();
 
-// Swagger configuration
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require("swagger-jsdoc");
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "News API",
-      version: "1.0.0",
-      description:
-        "News API endpoints",
-    },
-    servers: [
-      {
-        url: "http://localhost:3001/",
-      },
-    ],
-  },
-  apis: ["./routes/news.ts"],
-};
-
-const specs = swaggerJsdoc(options);
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs)
-);
-
-
-// API configuration
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
