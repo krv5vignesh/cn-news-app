@@ -3,8 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { API_KEY, COUNTRIES, DOMAIN, ENDPOINTS } from "../constants";
 
 const getHeadlines = async (req: Request, res: Response, next: NextFunction) => {
-  const url = `${DOMAIN}${ENDPOINTS.topHeadlines}?apiKey=${API_KEY}&country=${COUNTRIES.uniterKingdom}`;
-  
+  const url = `${DOMAIN}${ENDPOINTS.topHeadlines}?apiKey=${API_KEY}&country=${COUNTRIES.uniterKingdom}&pageSize=${req.query.pageSize}&page=${req.query.page}`;
   await axios.get(url)
   .then(response => {
     return res.status(200).json({data: response.data});
@@ -19,8 +18,7 @@ const getHeadlines = async (req: Request, res: Response, next: NextFunction) => 
 };
 
 const getNewsByKeyword = async (req: Request, res: Response, next: NextFunction) => {
-  const url = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}`;
-  console.log(req.params);
+  const url = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}&pageSize=${req.query.pageSize}&page=${req.query.page}`;
   await axios.get(url)
   .then(response => {
     return res.status(200).json({data: response.data});

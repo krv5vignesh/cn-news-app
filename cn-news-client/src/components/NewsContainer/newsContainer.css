@@ -5,3 +5,9 @@
 .search-bar {
   width: 100%;
 }
+
+.pagination {
+  margin-right: 33%;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
