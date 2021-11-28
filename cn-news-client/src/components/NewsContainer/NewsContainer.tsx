@@ -10,17 +10,24 @@ const NewsContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState<Array<ArticleType>>([]);
 
-  useEffect(() => {
-    // On initial load, fetch latest articles
+  const getHeadlines = () => {
     fetch(`${DOMAIN}${ENDPOINTS.headlines}`)
       .then((res) => res.json())
       .then((data) => {
         setArticles(data?.data?.articles);
       });
+  };
+  useEffect(() => {
+    // On initial load, fetch latest articles
+    getHeadlines();
   }, []);
 
   const handleSearch = () => {
     setArticles([]);
+    if (!searchTerm) {
+      getHeadlines();
+      return;
+    }
     // On search term change, fetch articles from everything endpoint
     fetch(`${DOMAIN}${ENDPOINTS.search}/${searchTerm}`)
       .then((res) => res.json())
