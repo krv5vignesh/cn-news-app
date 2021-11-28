@@ -9,12 +9,14 @@ import { DOMAIN, ENDPOINTS } from "../../constants";
 const NewsContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState<Array<ArticleType>>([]);
+  const [noOfResults, setNoOfResults] = useState<number>(0);
 
   const getHeadlines = () => {
     fetch(`${DOMAIN}${ENDPOINTS.headlines}`)
       .then((res) => res.json())
       .then((data) => {
         setArticles(data?.data?.articles);
+        setNoOfResults(data?.data?.totalResults);
       });
   };
   useEffect(() => {
@@ -24,6 +26,7 @@ const NewsContainer = () => {
 
   const handleSearch = () => {
     setArticles([]);
+    setNoOfResults(0);
     if (!searchTerm) {
       getHeadlines();
       return;
@@ -33,6 +36,7 @@ const NewsContainer = () => {
       .then((res) => res.json())
       .then((data) => {
         setArticles(data?.data?.articles);
+        setNoOfResults(data?.data?.totalResults);
       });
   };
 
@@ -60,7 +64,11 @@ const NewsContainer = () => {
           }}
         />
       </div>
-      <ArticleList articles={articles} />
+      <ArticleList
+        articles={articles}
+        noOfResults={noOfResults}
+        searchTerm={searchTerm}
+      />
     </div>
   );
 };
