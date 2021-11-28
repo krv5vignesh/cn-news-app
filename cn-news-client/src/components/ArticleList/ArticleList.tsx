@@ -18,9 +18,6 @@ const ArticleList = (props: ArticleListProps) => {
         <CircularProgress className="spinner" size={100} />
       ) : (
         <>
-          <Typography className="results-message">{`Total number of results${
-            searchTerm ? ` for "${searchTerm}"` : ""
-          }: ${noOfResults} articles`}</Typography>
           <Grid className="article-list-container" container spacing={6}>
             {articles?.map((article: any) => {
               return (

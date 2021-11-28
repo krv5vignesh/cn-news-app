@@ -4,6 +4,8 @@ import {
   InputAdornment,
   TextField,
   TablePagination,
+  Typography,
+  Switch,
 } from "@mui/material";
 import ArticleList from "../ArticleList";
 import SearchIcon from "@mui/icons-material/Search";
@@ -15,16 +17,17 @@ const NewsContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState<Array<ArticleType>>([]);
   const [noOfResults, setNoOfResults] = useState<number>(0);
+  const [searchAll, setSearchAll] = useState<boolean>(false);
 
   //Pagination
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(1);
+    setPage(0);
   };
 
   const handlePageChange = (
@@ -37,7 +40,7 @@ const NewsContainer = () => {
   //Get latest headlines
   const getHeadlines = () => {
     fetch(
-      `${DOMAIN}${ENDPOINTS.headlines}?pageSize=${rowsPerPage}&page=${page}`
+      `${DOMAIN}${ENDPOINTS.headlines}?pageSize=${rowsPerPage}&page=${page + 1}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -56,12 +59,15 @@ const NewsContainer = () => {
     setArticles([]);
     setNoOfResults(0);
     if (!searchTerm) {
+      setSearchAll(false);
       getHeadlines();
       return;
     }
 
     fetch(
-      `${DOMAIN}${ENDPOINTS.search}/${searchTerm}?pageSize=${rowsPerPage}&page=${page}`
+      `${DOMAIN}${
+        searchAll ? ENDPOINTS.search : ENDPOINTS.searchUKNews
+      }/${searchTerm}?pageSize=${rowsPerPage}&page=${page + 1}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -72,7 +78,7 @@ const NewsContainer = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, searchAll]);
 
   return (
     <div className="news-container">
@@ -97,6 +103,15 @@ const NewsContainer = () => {
             ),
           }}
         />
+        {searchTerm && (
+          <Typography className="source-switch">
+            All sources
+            <Switch
+              value={searchAll}
+              onChange={(event) => setSearchAll(event.target.checked)}
+            />
+          </Typography>
+        )}
       </div>
       <ArticleList
         articles={articles}
@@ -110,9 +125,7 @@ const NewsContainer = () => {
         page={page}
         onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}
-        rowsPerPageOptions={[10, 25, 50, 75, 100].filter(
-          (item) => item < noOfResults
-        )}
+        rowsPerPageOptions={[10, 25, 50].filter((item) => item < noOfResults)}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
     </div>

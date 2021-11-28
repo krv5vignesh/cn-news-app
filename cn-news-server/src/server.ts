@@ -2,11 +2,9 @@ import http from 'http';
 import express, { Express } from 'express';
 import routes from './routes/news';
 
-const router: Express = express();
-router.use(express.urlencoded({ extended: false }));
-router.use(express.urlencoded({ extended: false }));
+const app: Express = express();
 
-router.use((req, res, next) => {
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'origin, X-Requested-With,Content-Type,Accept, Authorization');
 
@@ -17,16 +15,15 @@ router.use((req, res, next) => {
   next();
 });
 
-router.use('/', routes);
+app.use('/', routes);
 
 // Error handling
-router.use((req, res, next) => {
+app.use((req, res, next) => {
   const error = new Error('Not found');
   return res.status(404).json({
       message: error.message
   });
 });
 
-const httpServer = http.createServer(router);
 const PORT = 3001;
-httpServer.listen(PORT, () => console.log(`The server is running on port ${PORT}`));
+app.listen(PORT, () => console.log(`The server is running on port ${PORT}`));
