@@ -1,16 +1,14 @@
 import Article from "../Article";
-import { CircularProgress, Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import "./articleList.css";
 import { ArticleType } from "../Article/types";
 
 type ArticleListProps = {
   articles: Array<ArticleType>;
-  noOfResults: number;
-  searchTerm: string;
 };
 
 const ArticleList = (props: ArticleListProps) => {
-  const { articles, noOfResults, searchTerm } = props;
+  const { articles } = props;
 
   return (
     <div className="article-list">

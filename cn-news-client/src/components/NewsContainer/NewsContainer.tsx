@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
   IconButton,
@@ -113,11 +114,7 @@ const NewsContainer = () => {
           </Typography>
         )}
       </div>
-      <ArticleList
-        articles={articles}
-        noOfResults={noOfResults}
-        searchTerm={searchTerm}
-      />
+      <ArticleList articles={articles} />
       <TablePagination
         className={"pagination"}
         component="div"
