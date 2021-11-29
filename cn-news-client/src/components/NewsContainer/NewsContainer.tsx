@@ -14,6 +14,11 @@ import "./newsContainer.css";
 import { ArticleType } from "../Article/types";
 import { DOMAIN, ENDPOINTS } from "../../constants";
 
+/**
+ * This component displays list of articles and a search bar.
+ * @component
+ */
+
 const NewsContainer = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [articles, setArticles] = useState<Array<ArticleType>>([]);

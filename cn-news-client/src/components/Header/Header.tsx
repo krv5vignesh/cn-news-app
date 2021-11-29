@@ -4,6 +4,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
+/**
+ * This component displays the app bar.
+ * @component
+ */
 const Header = () => {
   return (
     <Box sx={{ flexGrow: 1 }}>

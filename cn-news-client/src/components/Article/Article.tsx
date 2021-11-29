@@ -9,6 +9,16 @@ import {
 import "./article.css";
 import { ArticleType } from "./types";
 
+/**
+ * This component displays the article information in a card UI.
+ * @component
+ * @param {Object} props - props of the article component
+ * @param {string} props.title - Title of the article.
+ * @param {string} props.description - Description of the article.
+ * @param {string} props.url - URL of the article.
+ * @param {string} props.urlToImage - Image URL of the article thumbnail.
+ */
+
 const Article = (props: ArticleType) => {
   const { title, url, urlToImage } = props;
   return (

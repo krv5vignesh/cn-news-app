@@ -7,6 +7,13 @@ type ArticleListProps = {
   articles: Array<ArticleType>;
 };
 
+/**
+ * This component displays list of articles in a grid.
+ * @component
+ * @param {Object} props - props of the article component
+ * @param {Array} props.articles - An array of Articles.
+ */
+
 const ArticleList = (props: ArticleListProps) => {
   const { articles } = props;
 
