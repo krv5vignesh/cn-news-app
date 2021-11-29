@@ -39,7 +39,6 @@ const searchNewsFromUK = async (req: Request, res: Response, next: NextFunction)
   await axios.get(sourcesURL)
   .then(response => {
     const sources = response.data.sources.map((source: { id: any; }) => source.id)?.reduce((accumulator: any, currentValue: any) => `${accumulator},${currentValue}`);
-    console.log(sources);
     const url = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}&pageSize=${req.query.pageSize}&page=${req.query.page}&sources=${sources}`;
     axios.get(url)
     .then(response => {
