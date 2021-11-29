@@ -33,21 +33,21 @@ const searchAllNews = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 const searchNewsFromUK = async (req: Request, res: Response, next: NextFunction) => {
-  //Get sources from UK
-
+  //Get all the sources from UK
   const sourcesURL = `${DOMAIN}${ENDPOINTS.sources}?apiKey=${API_KEY}&country=${COUNTRIES.uniterKingdom}`;
-  await axios.get(sourcesURL)
+  let response = await axios.get(sourcesURL)
+  const sources = response.data.sources.map((source: { id: any; }) => source.id)?.reduce((accumulator: any, currentValue: any) => `${accumulator},${currentValue}`);
+  
+  // Retrieve the news for the keyword filtered by UK sources
+  const searchUrl = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}&pageSize=${req.query.pageSize}&page=${req.query.page}&sources=${sources}`;
+  axios.get(searchUrl)
   .then(response => {
-    const sources = response.data.sources.map((source: { id: any; }) => source.id)?.reduce((accumulator: any, currentValue: any) => `${accumulator},${currentValue}`);
-    const url = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}&pageSize=${req.query.pageSize}&page=${req.query.page}&sources=${sources}`;
-    axios.get(url)
-    .then(response => {
-      return res.status(200).json({data: response.data});
-    });
+    return res.status(200).json({data: response.data});
   })
   .catch(function (error) {
     return res.status(200).json({data: 'response.data'});
   });
+  
 };
 
 export default { getHeadlines, searchAllNews, searchNewsFromUK };
