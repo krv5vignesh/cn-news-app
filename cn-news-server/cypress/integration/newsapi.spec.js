@@ -23,6 +23,7 @@ describe("News API", () => {
   context("Get latest headlines", () => {
     it("should retrieve latest headlines", () => {
       cy.request("/headlines").then((response) => {
+        cy.log(JSON.stringify(response.body));
         expect(response.status).to.eq(200);
         expect(response.body.data.articles).to.have.length.greaterThan(0);
       });
@@ -30,6 +31,7 @@ describe("News API", () => {
 
     it("should have news only from UK", () => {
       cy.request("/headlines").then((response) => {
+        cy.log(JSON.stringify(response.body));
         expect(response.status).to.eq(200);
         expect(response.body.data.articles).to.have.length.greaterThan(0);
         expect(
@@ -44,6 +46,7 @@ describe("News API", () => {
   context("Search UK News", () => {
     it("should retrieve news articles based on the keyword", () => {
       cy.request("/search/uk/covid").then((response) => {
+        cy.log(JSON.stringify(response.body));
         expect(response.status).to.eq(200);
         expect(response.body.data.articles).to.have.length.greaterThan(0);
       });
@@ -51,6 +54,7 @@ describe("News API", () => {
 
     it("should have news whose source is from UK", () => {
       cy.request("/search/uk/covid").then((response) => {
+        cy.log(JSON.stringify(response.body));
         expect(response.status).to.eq(200);
         expect(response.body.data.articles).to.have.length.greaterThan(0);
         expect(
@@ -65,6 +69,7 @@ describe("News API", () => {
   context("Search all news", () => {
     it("should retrieve news articles based on the keyword", () => {
       cy.request("/search/covid").then((response) => {
+        cy.log(JSON.stringify(response.body));
         expect(response.status).to.eq(200);
         expect(response.body.data.articles).to.have.length.greaterThan(0);
       });
@@ -73,9 +78,12 @@ describe("News API", () => {
 
   context("Invalid requests", () => {
     it("should retrieve news articles based on the keyword", () => {
-      cy.request("/headlines/covid").then((response) => {
-        expect(response.status).to.eq(400);
-      });
+      cy.request({ url: "/headlines/covid", failOnStatusCode: false }).then(
+        (response) => {
+          cy.log(JSON.stringify(response.body));
+          expect(response.status).to.eq(404);
+        }
+      );
     });
   });
 });

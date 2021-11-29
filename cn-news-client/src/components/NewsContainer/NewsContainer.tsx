@@ -50,11 +50,6 @@ const NewsContainer = () => {
       });
   };
 
-  //On initial load, fetch latest articles
-  useEffect(() => {
-    getHeadlines();
-  }, []);
-
   //Search articles using the 'everything' endpoint
   const handleSearch = () => {
     setArticles([]);

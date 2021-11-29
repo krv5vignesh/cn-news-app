@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { Request, Response, NextFunction } from "express";
 import { API_KEY, COUNTRIES, DOMAIN, ENDPOINTS } from "../constants";
 
+// GET - Get lastest headlines from UK
 const getHeadlines = async (req: Request, res: Response, next: NextFunction) => {
   const url = `${DOMAIN}${ENDPOINTS.topHeadlines}?apiKey=${API_KEY}&country=${COUNTRIES.uniterKingdom}&pageSize=${req.query.pageSize}&page=${req.query.page}`;
   await axios.get(url)
@@ -17,6 +18,7 @@ const getHeadlines = async (req: Request, res: Response, next: NextFunction) => 
   });
 };
 
+// GET - Search news based on the keyword from all the sources
 const searchAllNews = async (req: Request, res: Response, next: NextFunction) => {
   const url = `${DOMAIN}${ENDPOINTS.everything}?apiKey=${API_KEY}&q=${encodeURI(req.params.searchTerm)}&pageSize=${req.query.pageSize}&page=${req.query.page}`;
   await axios.get(url)
@@ -32,6 +34,7 @@ const searchAllNews = async (req: Request, res: Response, next: NextFunction) =>
   });
 };
 
+// GET - Search news based on the keyword from UK sources
 const searchNewsFromUK = async (req: Request, res: Response, next: NextFunction) => {
   //Get all the sources from UK
   const sourcesURL = `${DOMAIN}${ENDPOINTS.sources}?apiKey=${API_KEY}&country=${COUNTRIES.uniterKingdom}`;

@@ -6,8 +6,9 @@ The React client lives inside the "cn-news-client" folder and the Node.JS server
 
 ## How to run
 
-1. Do npm install on both the client and the server folders.
-2. Add a ".env" file to the root of the server app folder (/cn-news-server) and add the following
+1. Clone this repository.
+2. Do npm install on the root (/), the client (/cn-news-client) and the server (/cn-news-server) folders.
+3. Add a ".env" file to the root of the server app folder (/cn-news-server) and add the following.
    ` NEWS_API_KEY = YOUR_API_KEY`
-3. Replace YOUR_API_KEY with your api key
-4. From the root folder run "npm run start" to start the application.
+4. Replace YOUR_API_KEY with your api key.
+5. From the root folder run "npm run start" to start the application.
