@@ -97,7 +97,7 @@ const NewsContainer = () => {
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={handleSearch}>
+                <IconButton className="search-button" onClick={handleSearch}>
                   <SearchIcon />
                 </IconButton>
               </InputAdornment>
